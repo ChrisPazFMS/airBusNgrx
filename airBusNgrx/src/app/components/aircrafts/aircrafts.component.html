@@ -1,0 +1,63 @@
+<div>
+    <app-aircraft-navbar (eventEmitter)="onActionEvent($event)"></app-aircraft-navbar>
+    <!-- <ul class="navbar navbar-nav">
+        <li>
+            <button type="button" class="btn btn-outline-info m-2" (click)="getAllAireCrafts()">Tous les Avions</button>
+            <button type="button" class="btn btn-outline-info m-2" (click)="getDesignedAircrafts()">Avions en étude</button>
+            <button type="button" class="btn btn-outline-info m-2" (click)="getDevelopementAircrafts()">Avions en construction</button>
+        </li>
+    </ul> -->
+    <ng-container *ngIf="aircrafts$ | async as result" [ngSwitch]="result.dataState">
+
+        <ng-container *ngSwitchCase="dataStateEnum.LOADING">
+            <div class="container d-flex">
+                <div class="p-2 mx-auto">Loading</div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="dataStateEnum.LOADED">
+            <div class="container d-flex">
+                <div class="p-2 mx-auto">Loaded</div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="dataStateEnum.ERROR">
+
+            <div class="container d-flex">
+                <div class="p-2 text-danger mx-auto">{{result.errorMessage}}</div>
+            </div>
+
+        </ng-container>
+
+        <div class="d-flex">
+            <div class="mx-auto">
+                <!-- <ng-container *ngIf="error">
+                    <div class="p-2 text-danger">{{error}}</div>
+                </ng-container> -->
+                <!-- <ng-container *ngIf="aircrafts"> -->
+                <!-- <ng-container *ngIf="aircrafts$"> -->
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th class="px-5">Id</th>
+                            <th class="px-5">Program</th>
+                            <th class="px-5">Design</th>
+                            <th class="px-5">Development</th>
+                        </tr>
+                    </thead>
+                    <!-- <tr *ngFor="let aircraft of aircrafts"> -->
+                    <tbody>
+                        <!-- <tr *ngFor="let aircraft of aircrafts$ | async"> -->
+                        <tr *ngFor="let aircraft of result.data">
+                            <td class="px-5">{{aircraft.id}}</td>
+                            <td class="px-5">{{aircraft.prog}}</td>
+                            <td class="px-5">{{aircraft.design}}</td>
+                            <td class="px-5">{{aircraft.development}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- </ng-container> -->
+            </div>
+        </div>
+    </ng-container>
+</div>
