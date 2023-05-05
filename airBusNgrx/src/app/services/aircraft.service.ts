@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Aircraft } from '../model/aircraft.model';
 import { environment } from 'src/environments/environment';
+import { NgForm } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -19,21 +20,22 @@ export class AircraftService {
 
   //liste des avions en phase de design
   public getDesignedAircrafts(): Observable<Aircraft[]> {
-    console.log('getDesign');
     return this.http.get<Aircraft[]>(
-      environment.host + 'aircrafts?desing=true' //retourner les avions en cours de design
+      environment.host + '/aircrafts?design=true' //retourner les avions en cours de design
     );
   }
 
-  //liste des avios en phase de développement
-  public getDeveloppementAircrafts(): Observable<Aircraft[]> {
+  //liste des avions en phase de développement
+  public getDevelopmentAircrafts(): Observable<Aircraft[]> {
     return this.http.get<Aircraft[]>(
-      environment.host + 'aircrafts?developpment=true'
+      environment.host + '/aircrafts?development=true'
     );
   }
 
   //renvoi un avion à partir de l'id
-  public getAircraftsByMsn(id: number): Observable<Aircraft[]> {
-    return this.http.get<Aircraft[]>(environment.host + '/aircrafts/' + id);
+  public getAircraftsByMsn($id: any): Observable<Aircraft[]> {
+    return this.http.get<Aircraft[]>(
+      environment.host + '/aircrafts?prog=' + $id.payload.search
+    );
   }
 }
