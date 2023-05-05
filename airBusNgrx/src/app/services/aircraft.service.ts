@@ -35,7 +35,7 @@ export class AircraftService {
   //renvoi un avion à partir de l'id
   public getAircraftsByMsn($id: any): Observable<Aircraft[]> {
     return this.http.get<Aircraft[]>(
-      environment.host + '/aircrafts?prog=' + $id.payload.search
+      environment.host + '/aircrafts?prog_like=' + $id.payload.search
     );
   }
 }
